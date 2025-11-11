@@ -2,6 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "core.h"
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -100,7 +101,7 @@ int main() {
         }
 
         SDL_RenderPresent(renderer);
-
+        main_chip_8_loop(1);
         SDL_Delay(16); // ~60 FPS
     }
 
