@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "core.h"
+#include "prepare.h"
 
 
 int decript(int data_for_decript) {
@@ -25,7 +27,5 @@ void main_chip_8_loop(int value){
     decripted_data = decript(value);
     do_instruct(decripted_data);
     update_system_condition();
-
     printf("core file included corect values is %d\n", value);
-
 }
