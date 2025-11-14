@@ -39,12 +39,12 @@ uint8_t fontset[80] = {
 }; 
 
 void set_zeros_into_memory(){
-    for (uint8_t i = 0; i < 4096; i++) {
+    for (int i = 0; i < 4096; i++) {
     memory[i] = 0; 
 }
 }
 void set_values_into_memory(){
-    for (uint8_t i = 0; i < 80; i++) {
+    for (int i = 0; i < 80; i++) {
         memory[0x50 + i] = fontset[i];
     }
 }
