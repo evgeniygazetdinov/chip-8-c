@@ -1,5 +1,10 @@
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include "prepare.h"
+#include "helpers.h"
+
 
 uint16_t PC = 0x200;
 uint8_t memory[4096];
@@ -51,4 +56,23 @@ void set_values_into_memory(){
 void initialize_memory(){
     set_zeros_into_memory();
     set_values_into_memory();
+}
+
+void upload_file_to_memory(const char* filename){
+    FILE *rom = fopen(filename, "rb");
+    if (rom == NULL) {
+        fatal_error("Не найден файл %s", filename);
+    }
+    fseek(rom, 0, SEEK_END);
+    long file_size = ftell(rom);
+    printf("begin read file\n");
+
+    if (rom) {
+        fread(&memory[0x200], sizeof(uint8_t), file_size, rom);
+        fclose(rom);
+    }
+    if (!rom) {
+        printf("error detected");
+    }
+    printf("file uploaded as bytes into memory\n");
 }
