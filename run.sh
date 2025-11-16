@@ -1,2 +1,1 @@
-
-clang -o hello_sdl main.c core.c prepare.c -lSDL2 -lSDL2_ttf && ./hello_sdl
+gcc -Iinclude -o hello_sdl src/main.c src/helpers.c src/core.c src/prepare.c -lSDL2 -lSDL2_ttf && ./hello_sdl

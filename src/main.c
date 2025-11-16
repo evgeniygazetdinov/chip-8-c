@@ -17,7 +17,7 @@ int main() {
     }
 
     SDL_Window* window = SDL_CreateWindow(
-        "SDL2 Hello World",
+        "some message",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         800, 600,
@@ -55,7 +55,7 @@ int main() {
 
     bool running = true;
     SDL_Event event;
-
+    main_chip_8_loop(1);
     while (running) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -101,7 +101,6 @@ int main() {
         }
 
         SDL_RenderPresent(renderer);
-        main_chip_8_loop(1);
         SDL_Delay(16); // ~60 FPS
     }
 

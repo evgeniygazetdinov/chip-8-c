@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "core.h"
 #include "prepare.h"
+#include <stdbool.h>
 
 
 int decript(int data_for_decript) {
@@ -23,9 +24,15 @@ void update_system_condition(){
 
 
 void main_chip_8_loop(int value){
+    const char* filename = "test_ibm_rom.ch8";
+    upload_file_to_memory(filename);
+    bool chip_8_running = true;
+    while(chip_8_running){
     int decripted_data;
+
     decripted_data = decript(value);
     do_instruct(decripted_data);
     update_system_condition();
-    printf("core file included corect values is %d\n", value);
+    chip_8_running = false;
+    }
 }
