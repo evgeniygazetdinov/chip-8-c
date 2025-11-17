@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 
-extern uint16_t PC;
 extern uint8_t memory[4096];
 extern uint8_t fontset[80]; 
 
