@@ -5,8 +5,6 @@
 #include "prepare.h"
 #include "helpers.h"
 
-
-
 uint8_t memory[4096];
 uint8_t fontset[80] = {
     // 0
@@ -40,38 +38,46 @@ uint8_t fontset[80] = {
     // E
     0xF0, 0x80, 0xF0, 0x80, 0xF0,
     // F
-    0xF0, 0x80, 0xF0, 0x80, 0x80
-}; 
+    0xF0, 0x80, 0xF0, 0x80, 0x80};
 
-void set_zeros_into_memory(){
-    for (int i = 0; i < 4096; i++) {
-    memory[i] = 0; 
+void set_zeros_into_memory()
+{
+    for (int i = 0; i < 4096; i++)
+    {
+        memory[i] = 0;
+    }
 }
-}
-void set_values_into_memory(){
-    for (int i = 0; i < 80; i++) {
+void set_values_into_memory()
+{
+    for (int i = 0; i < 80; i++)
+    {
         memory[0x50 + i] = fontset[i];
     }
 }
-void initialize_memory(){
+void initialize_memory()
+{
     set_zeros_into_memory();
     set_values_into_memory();
 }
 
-void upload_file_to_memory(const char* filename){
+void upload_file_to_memory(const char *filename)
+{
     FILE *rom = fopen(filename, "rb");
-    if (rom == NULL) {
+    if (rom == NULL)
+    {
         fatal_error("Не найден файл %s", filename);
     }
     fseek(rom, 0, SEEK_END);
     long file_size = ftell(rom);
     printf("begin read file\n");
 
-    if (rom) {
+    if (rom)
+    {
         fread(&memory[0x200], sizeof(uint8_t), file_size, rom);
         fclose(rom);
     }
-    if (!rom) {
+    if (!rom)
+    {
         printf("error detected");
     }
     printf("file uploaded as bytes into memory\n");
