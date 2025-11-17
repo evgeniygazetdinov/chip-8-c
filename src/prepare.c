@@ -6,7 +6,7 @@
 #include "helpers.h"
 
 
-uint16_t PC = 0x200;
+
 uint8_t memory[4096];
 uint8_t fontset[80] = {
     // 0
