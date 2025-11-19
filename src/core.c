@@ -6,11 +6,15 @@
 #include <string.h>
 
 
-uint16_t PC = 0x200;
+uint16_t PC = 0x200;// program counter
 const char* filename = "test_ibm_rom.ch8";
 bool chip_8_running = true;
 uint8_t display[64*32];
 
+uint16_t IND;//index register
+uint16_t stack[16];
+uint16_t SP; //stack pointer
+uint16_t V[16]; //registers V0-VF
 
 uint16_t decript(int data_for_decript) {
     uint16_t command = (memory[PC]<< 8) | memory[PC+1];
@@ -29,22 +33,51 @@ void do_instruct(uint16_t instruction){
     switch (instruction & 0xF000) // check first 4 bits
     {
     case 0x000:
-        switch (instruction)
-        {
+        switch (instruction){
         case 0x00E0: // clear display
             memset(display, 0, sizeof(display));
             PC += 2;
             break;
+
+        case 0x00EE:
+            SP--;
+            PC = stack[SP];
+            PC+=2;
         
         default:
-            break;
+            printf("Unknown instructions 0x%04X\n", instruction);
+            PC+=2;
         }
         break;
     
-    default:
+    case 0x1000: //moving to adress nnn
+        PC = nnn;
         break;
-    }
+    
+    case 0x2000: //caling subprogram via adress nnn
+        stack[SP] = PC;
+        SP++;
+        PC = nnn;
+        break;
 
+    case 0x3000:
+        if (V[x] == kk){
+            PC+=2;
+        }
+        PC+=2;
+        break;
+    case 0x4000:
+        if(V[x] !=kk){
+            PC+=2;
+        }
+        PC+=2;
+        break;
+    case 0x5000:
+        if(V[x] == V[y]){
+            PC+=2;
+        }
+        PC+=2;
+    }
 }
 void decrease_timers(){
 
