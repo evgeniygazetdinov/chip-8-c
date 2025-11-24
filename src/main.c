@@ -8,13 +8,13 @@ int main()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        printf("Ошибка инициализации SDL: %s\n", SDL_GetError());
+        printf("error init SDL: %s\n", SDL_GetError());
         return 1;
     }
 
     if (TTF_Init() < 0)
     {
-        printf("Ошибка инициализации SDL_ttf: %s\n", TTF_GetError());
+        printf("error init SDL_ttf: %s\n", TTF_GetError());
         SDL_Quit();
         return 1;
     }
@@ -28,7 +28,7 @@ int main()
 
     if (!window)
     {
-        printf("Ошибка создания окна: %s\n", SDL_GetError());
+        printf("Window error creation: %s\n", SDL_GetError());
         TTF_Quit();
         SDL_Quit();
         return 1;
@@ -40,7 +40,7 @@ int main()
 
     if (!renderer)
     {
-        printf("Ошибка создания рендерера: %s\n", SDL_GetError());
+        printf("error render creation: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
         TTF_Quit();
         SDL_Quit();
@@ -54,8 +54,8 @@ int main()
     }
     if (!font)
     {
-        printf("Не удалось загрузить шрифт: %s\n", TTF_GetError());
-        printf("Установите шрифты: sudo apt install fonts-freefont-ttf\n");
+        printf("cant load font: %s\n", TTF_GetError());
+        printf("install fonts: sudo apt install fonts-freefont-ttf\n");
     }
 
     bool running = true;
