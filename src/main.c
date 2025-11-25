@@ -6,6 +6,8 @@
 
 int main()
 {
+
+    main_chip_8_loop(1);
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("error init SDL: %s\n", SDL_GetError());
@@ -60,7 +62,7 @@ int main()
 
     bool running = true;
     SDL_Event event;
-    main_chip_8_loop(1);
+
     while (running)
     {
         while (SDL_PollEvent(&event))
