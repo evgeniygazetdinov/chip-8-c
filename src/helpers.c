@@ -25,8 +25,6 @@ int should_update_timers(){
     }
     return 0;
 }
-
 void play_beep() {
-    printf("\a");
-    fflush(stdout);
+    system("speaker-test -t sine -f 800 &"); // Запуск в фоне
 }

@@ -3,11 +3,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "core.h"
+#include "helpers.h"
 
 int main()
 {
-
-    main_chip_8_loop(1);
+    play_beep();
+    main_chip_8_loop();
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("error init SDL: %s\n", SDL_GetError());

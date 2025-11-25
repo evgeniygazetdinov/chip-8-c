@@ -23,7 +23,7 @@ uint16_t V[16];    // registers V0-VF
 uint16_t keys[16]; // keys conditioins
 
 
-uint16_t decript(int data_for_decript)
+uint16_t decript()
 {
     printf("PC = 0x%04X\n", PC);  // what now in PC in HEX format
 
@@ -31,8 +31,10 @@ uint16_t decript(int data_for_decript)
     return command;
 }
 
-void do_instruct(uint16_t instruction)
+void do_instruct()
 {
+
+    uint16_t instruction = PC;
     uint16_t nnn = instruction & 0x0FFF;      // address (12bit)
     uint16_t kk = instruction & 0x00FF;       // Byte (8 bit)
     uint16_t n = instruction & 0x000F;        // halfbyte (4 bit)
