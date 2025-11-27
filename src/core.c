@@ -23,7 +23,7 @@ uint16_t V[16];    // registers V0-VF
 uint16_t keys[16]; // keys conditioins
 
 
-uint16_t decript(int data_for_decript)
+uint16_t decript()
 {
     printf("PC = 0x%04X\n", PC);  // what now in PC in HEX format
 
@@ -31,8 +31,10 @@ uint16_t decript(int data_for_decript)
     return command;
 }
 
-void do_instruct(uint16_t instruction)
+void do_instruct()
 {
+
+    uint16_t instruction = PC;
     uint16_t nnn = instruction & 0x0FFF;      // address (12bit)
     uint16_t kk = instruction & 0x00FF;       // Byte (8 bit)
     uint16_t n = instruction & 0x000F;        // halfbyte (4 bit)
@@ -307,22 +309,24 @@ void update_system_condition()
     }
 }
 
-void main_chip_8_loop(int value)
+void main_chip_8_loop(SDL_Renderer *renderer,TTF_Font *font)
 {
 
+    bool running = true;
+    SDL_Event event;
     initialize_memory();
     upload_file_to_memory(filename);
-
+    sdl_run(running, event, renderer, font);
     while (chip_8_running)
     {
 
         // begin from PC init value as 512 after moving by plan
 
-        uint16_t decripted_data = decript(value);
-        do_instruct(decripted_data);
+        uint16_t decripted_data = decript();
+        do_instruct();
         update_system_condition();
         //chip_8_running = false;
-        sleep(1);
+        
 
     }
 }
