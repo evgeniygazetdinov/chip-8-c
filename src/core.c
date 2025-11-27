@@ -309,22 +309,24 @@ void update_system_condition()
     }
 }
 
-void main_chip_8_loop(int value)
+void main_chip_8_loop(SDL_Renderer *renderer,TTF_Font *font)
 {
 
+    bool running = true;
+    SDL_Event event;
     initialize_memory();
     upload_file_to_memory(filename);
-
+    sdl_run(running, event, renderer, font);
     while (chip_8_running)
     {
 
         // begin from PC init value as 512 after moving by plan
 
-        uint16_t decripted_data = decript(value);
-        do_instruct(decripted_data);
+        uint16_t decripted_data = decript();
+        do_instruct();
         update_system_condition();
         //chip_8_running = false;
-        sleep(1);
+        
 
     }
 }

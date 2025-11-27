@@ -7,8 +7,6 @@
 
 int main()
 {
-    play_beep();
-    main_chip_8_loop();
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("error init SDL: %s\n", SDL_GetError());
@@ -60,67 +58,7 @@ int main()
         printf("cant load font: %s\n", TTF_GetError());
         printf("install fonts: sudo apt install fonts-freefont-ttf\n");
     }
-
-    bool running = true;
-    SDL_Event event;
-
-    while (running)
-    {
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
-                running = false;
-            }
-            if (event.type == SDL_KEYDOWN)
-            {
-                if (event.key.keysym.sym == SDLK_ESCAPE)
-                {
-                    running = false;
-                }
-            }
-        }
-
-        SDL_SetRenderDrawColor(renderer, 40, 44, 52, 255);
-
-        if (font)
-        {
-            SDL_Color white = {255, 255, 255, 255};
-            SDL_Surface *text_surface = TTF_RenderText_Blended(font, "Hello, SDL2 World!", white);
-
-            if (text_surface)
-            {
-                SDL_Texture *text_texture = SDL_CreateTextureFromSurface(renderer, text_surface);
-
-                if (text_texture)
-                {
-                    int text_width = text_surface->w;
-                    int text_height = text_surface->h;
-
-                    SDL_Rect text_rect = {
-                        (800 - text_width) / 2,
-                        (600 - text_height) / 2,
-                        text_width,
-                        text_height};
-
-                    SDL_RenderCopy(renderer, text_texture, NULL, &text_rect);
-                    SDL_DestroyTexture(text_texture);
-                }
-
-                SDL_FreeSurface(text_surface);
-            }
-        }
-        else
-        {
-            SDL_Rect rect = {300, 250, 200, 100};
-            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-            SDL_RenderFillRect(renderer, &rect);
-        }
-
-        SDL_RenderPresent(renderer);
-        SDL_Delay(16); // ~60 FPS
-    }
-
+    main_chip_8_loop(renderer, font);    
     if (font)
         TTF_CloseFont(font);
     SDL_DestroyRenderer(renderer);
