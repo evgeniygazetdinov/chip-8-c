@@ -3,9 +3,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-
 extern uint8_t memory[4096];
-extern uint8_t fontset[80]; 
+extern uint8_t fontset[80];
 
 void set_zeros_into_memory();
 void set_values_into_memory();
