@@ -1,9 +1,9 @@
+#include "prepare.h"
+#include "helpers.h"
+#include <stdarg.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include "prepare.h"
-#include "helpers.h"
 
 uint8_t memory[4096];
 uint8_t fontset[80] = {
@@ -60,9 +60,9 @@ void initialize_memory()
     set_values_into_memory();
 }
 
-void upload_file_to_memory(const char *filename)
+void upload_file_to_memory(const char* filename)
 {
-    FILE *rom = fopen(filename, "rb");
+    FILE* rom = fopen(filename, "rb");
     if (rom == NULL)
     {
         fatal_error("Не найден файл %s", filename);
