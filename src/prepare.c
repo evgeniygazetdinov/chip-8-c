@@ -47,7 +47,7 @@ void set_zeros_into_memory()
         memory[i] = 0;
     }
 }
-void set_values_into_memory()
+void set_font_into_memory()
 {
     for (int i = 0; i < 80; i++)
     {
@@ -57,7 +57,7 @@ void set_values_into_memory()
 void initialize_memory()
 {
     set_zeros_into_memory();
-    set_values_into_memory();
+    set_font_into_memory();
 }
 
 void upload_file_to_memory(const char* filename)

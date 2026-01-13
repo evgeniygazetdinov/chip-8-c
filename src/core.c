@@ -21,6 +21,11 @@ uint16_t SP;       // stack pointer
 uint16_t V[16];    // registers V0-VF
 uint16_t keys[16]; // keys conditioins
 
+// statistics
+uint64_t ins_executed;
+bool waiting_for_key;
+uint8_t key_register;
+
 uint16_t decript()
 {
     printf("PC = 0x%04X\n", PC); // what now in PC in HEX format
@@ -385,6 +390,7 @@ void main_chip_8_loop(SDL_Renderer* renderer, TTF_Font* font)
 {
     bool running = true;
     SDL_Event event;
+    // set nulls and uploads fonts
     initialize_memory();
     upload_file_to_memory(filename);
     sdl_run(running, event, renderer, font);
