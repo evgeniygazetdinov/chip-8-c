@@ -11,4 +11,5 @@ base project notes
  16 registers of common use
  - 0x000-0x1FF: reserved for interp
  - 0x050-0x0A0: intenral fonts
- - 0x200-0xFFF: program and data    
+ - 0x200-0xFFF: program and data
+ - videomemory begin from OXF00    
