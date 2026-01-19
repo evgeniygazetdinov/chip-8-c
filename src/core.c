@@ -311,16 +311,16 @@ void decrease_timers()
         sound_timer--;
         if (sound_timer > 0)
         {
-            play_beep();
+            // play_beep();
         }
     }
 }
 void update_system_condition()
 {
-    if (should_update_timers())
-    {
-        decrease_timers();
-    }
+    // if (should_update_timers())
+    // {
+    //     decrease_timers();
+    // }
 }
 void sdl_run(bool running, SDL_Event event, SDL_Renderer* renderer,
              TTF_Font* font)

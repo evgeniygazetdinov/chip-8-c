@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "gcc",
+      "args": [
+        "-g",
+        "-O0",
+        "-I${workspaceFolder}/include",  // Добавьте этот флаг
+        "-o",
+        "${workspaceFolder}/hello_sdl",
+        "${workspaceFolder}/src/main.c",
+        "${workspaceFolder}/src/helpers.c",
+        "${workspaceFolder}/src/core.c",
+        "${workspaceFolder}/src/prepare.c",
+        "-lSDL2",
+        "-lSDL2main"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Сборка проекта с отладочной информацией"
+    }
+  ]
+}
