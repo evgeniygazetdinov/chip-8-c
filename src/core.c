@@ -60,10 +60,13 @@ void do_instruct()
                     SP--;
                     PC = stack[SP];
                     PC += 2;
+                    break;
 
-                default:
-                    printf("Unknown instructions 0x%04X\n", instruction);
-                    PC += 2;
+                    //    default:
+                    //        printf("Unknown instructions 0x%04X\n",
+                    //        instruction);
+                    //         PC += 2;
+                    // break;
             }
             break;
 
