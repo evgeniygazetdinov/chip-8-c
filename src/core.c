@@ -12,14 +12,14 @@ uint16_t PC = 0x200; // program counter
 const char* filename = "test_ibm_rom.ch8";
 bool chip_8_running = true;
 uint8_t display[64 * 32];
-uint8_t delay_timer;
-uint8_t sound_timer;
+uint8_t delay_timer = 0;
+uint8_t sound_timer = 0;
 
 uint16_t IND; // index register
 uint16_t stack[16];
-uint16_t SP;       // stack pointer
-uint16_t V[16];    // registers V0-VF
-uint16_t keys[16]; // keys conditioins
+uint8_t SP = 0;         // stack pointer
+uint8_t V[16] = {0};    // registers V0-VF
+uint8_t keys[16] = {0}; // keys conditioins
 
 // statistics
 uint64_t ins_executed;
@@ -34,10 +34,23 @@ uint16_t decript()
     return command;
 }
 
-void do_instruct()
+void init_chip()
+{
+    PC = 0x200; // Программы начинаются с адреса 0x200
+    IND = 0;
+    SP = 0;
+    memset(V, 0, sizeof(V));
+    memset(keys, 0, sizeof(keys));
+    memset(stack, 0, sizeof(stack));
+    memset(display, 0, sizeof(display));
+    delay_timer = 0;
+    sound_timer = 0;
+}
+
+void do_instruct(uint16_t decripted_instruct)
 {
 
-    uint16_t instruction = PC;
+    uint16_t instruction = decripted_instruct;
     uint16_t nnn = instruction & 0x0FFF;      // address (12bit)
     uint16_t kk = instruction & 0x00FF;       // Byte (8 bit)
     uint16_t n = instruction & 0x000F;        // halfbyte (4 bit)
@@ -57,13 +70,18 @@ void do_instruct()
                     break;
 
                 case 0x00EE:
-                    SP--;
+                    if (SP > 0)
+                    {
+                        SP--;
+                    }
                     PC = stack[SP];
                     PC += 2;
+                    break;
 
                 default:
                     printf("Unknown instructions 0x%04X\n", instruction);
                     PC += 2;
+                    break;
             }
             break;
 
@@ -74,6 +92,10 @@ void do_instruct()
         case 0x2000: // caling subprogram via adress nnn
             stack[SP] = PC;
             SP++;
+            if (SP >= 16)
+            {
+                SP = 15;
+            }
             PC = nnn;
             break;
 
@@ -100,7 +122,7 @@ void do_instruct()
             break;
 
         case 0x6000:
-            V[x] == kk;
+            V[x] = kk;
             PC += 2;
             break;
 
@@ -225,6 +247,7 @@ void do_instruct()
                 default:
                     printf("unknown instruction 0X%04X\n", instruction);
             }
+            break;
         case 0xF000:
             switch (kk)
             {
@@ -328,7 +351,7 @@ void sdl_run(bool running, SDL_Event event, SDL_Renderer* renderer,
     while (running)
     {
         uint16_t decripted_data = decript();
-        do_instruct();
+        do_instruct(decripted_data);
         update_system_condition();
         while (SDL_PollEvent(&event))
         {

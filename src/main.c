@@ -7,6 +7,7 @@
 
 int main()
 {
+    init_chip();
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("error init SDL: %s\n", SDL_GetError());
